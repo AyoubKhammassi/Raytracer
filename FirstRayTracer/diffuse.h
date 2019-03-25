@@ -1,5 +1,6 @@
 #include "utilities.h"
 
+
 class diffuse : public material
 {
 public:

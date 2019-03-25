@@ -1,6 +1,7 @@
 d:\projects\c++\firstraytracer\firstraytracer\debug\vc141.pdb
 d:\projects\c++\firstraytracer\firstraytracer\debug\vc141.idb
 d:\projects\c++\firstraytracer\firstraytracer\debug\camera.obj
+d:\projects\c++\firstraytracer\firstraytracer\debug\dielectric.obj
 d:\projects\c++\firstraytracer\firstraytracer\debug\diffuse.obj
 d:\projects\c++\firstraytracer\firstraytracer\debug\hitable.obj
 d:\projects\c++\firstraytracer\firstraytracer\debug\hitable_list.obj
@@ -11,8 +12,8 @@ d:\projects\c++\firstraytracer\firstraytracer\debug\ray.obj
 d:\projects\c++\firstraytracer\firstraytracer\debug\sphere.obj
 d:\projects\c++\firstraytracer\firstraytracer\debug\utilities.obj
 d:\projects\c++\firstraytracer\firstraytracer\debug\vec3.obj
-d:\projects\c++\firstraytracer\debug\firstraytracer.exe
 d:\projects\c++\firstraytracer\debug\firstraytracer.ilk
+d:\projects\c++\firstraytracer\debug\firstraytracer.exe
 d:\projects\c++\firstraytracer\debug\firstraytracer.pdb
 d:\projects\c++\firstraytracer\firstraytracer\debug\firstraytracer.tlog\cl.command.1.tlog
 d:\projects\c++\firstraytracer\firstraytracer\debug\firstraytracer.tlog\cl.read.1.tlog

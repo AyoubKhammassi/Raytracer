@@ -3,44 +3,27 @@ d:\projects\c++\firstraytracer\firstraytracer\vec3.h(64): warning C4244: 'initia
 d:\projects\c++\firstraytracer\firstraytracer\vec3.h(164): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 d:\projects\c++\firstraytracer\firstraytracer\sphere.h(28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 d:\projects\c++\firstraytracer\firstraytracer\sphere.h(37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(45): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(63): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\main.cpp(28): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\main.cpp(49): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\main.cpp(50): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\main.cpp(51): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\camera.h(23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\utilities.h(26): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\utilities.h(39): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\utilities.h(83): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\utilities.h(101): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\utilities.h(102): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\dielectric.h(30): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(31): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(32): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(32): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(33): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(37): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(37): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(41): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(41): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(45): warning C4305: 'argument': truncation from 'double' to 'float'
 d:\projects\c++\firstraytracer\firstraytracer\main.cpp(52): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\main.cpp(77): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
-  Generating Code...
-  Compiling...
-  utilities.cpp
-d:\projects\c++\firstraytracer\firstraytracer\vec3.h(64): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\vec3.h(164): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\sphere.h(28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\sphere.h(37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(45): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(63): warning C4305: 'argument': truncation from 'double' to 'float'
-  metal.cpp
-d:\projects\c++\firstraytracer\firstraytracer\vec3.h(64): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\vec3.h(164): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\sphere.h(28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\sphere.h(37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(45): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(63): warning C4305: 'argument': truncation from 'double' to 'float'
-  diffuse.cpp
-d:\projects\c++\firstraytracer\firstraytracer\vec3.h(64): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\vec3.h(164): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\sphere.h(28): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\sphere.h(37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(29): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(45): warning C4305: 'argument': truncation from 'double' to 'float'
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-d:\projects\c++\firstraytracer\firstraytracer\utilities.h(63): warning C4305: 'argument': truncation from 'double' to 'float'
-  Generating Code...
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(53): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(65): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(86): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(87): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(88): warning C4305: 'argument': truncation from 'double' to 'float'
+d:\projects\c++\firstraytracer\firstraytracer\main.cpp(116): warning C4244: 'argument': conversion from 'int' to 'const float', possible loss of data
   FirstRayTracer.vcxproj -> D:\projects\C++\FirstRayTracer\Debug\FirstRayTracer.exe

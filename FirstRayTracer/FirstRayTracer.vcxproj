@@ -112,6 +112,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="dielectric.cpp" />
     <ClCompile Include="diffuse.cpp" />
     <ClCompile Include="Hitable.cpp" />
     <ClCompile Include="Hitable_list.cpp" />
@@ -125,6 +126,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
+    <ClInclude Include="dielectric.h" />
     <ClInclude Include="diffuse.h" />
     <ClInclude Include="Hitable.h" />
     <ClInclude Include="Hitable_list.h" />
