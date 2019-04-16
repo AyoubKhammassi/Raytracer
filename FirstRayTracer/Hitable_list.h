@@ -5,16 +5,16 @@
 class Hitable_list : public Hitable
 {
 public:
-	Hitable_list();
-	Hitable_list(Hitable **l, int s) { list = l, list_size = s; }
-	virtual bool hit(const Ray& r, float t_min, float t_max, hit_record& record) const;
+	__device__ Hitable_list() = default;
+	__device__ Hitable_list(Hitable **l, int s) { list = l, list_size = s; }
+	__device__ virtual bool hit(const Ray& r, float t_min, float t_max, hit_record& record) const;
 
 	//vars
 	Hitable **list;
 	int list_size;
 };
 
-inline bool Hitable_list::hit(const Ray& r, float t_min, float t_max, hit_record& record) const
+__device__ inline bool Hitable_list::hit(const Ray& r, float t_min, float t_max, hit_record& record) const
 {
 	hit_record record_temp;
 	bool hit_anything = false;

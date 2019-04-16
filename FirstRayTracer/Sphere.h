@@ -5,17 +5,17 @@
 class Sphere : public Hitable
 {
 public:
-	Sphere();
-	Sphere(vec3& cen, float r, material* m) : center(cen), radius(r), mat(m) {};
-	virtual bool hit(const Ray& r, float t_min, float t_max, hit_record& record) const;
-
+	__device__ Sphere() = default;
+	__device__ Sphere(vec3& cen, float r, material* m) : center(cen), radius(r), mat(m) {};
+	__device__ virtual bool hit(const Ray& r, float t_min, float t_max, hit_record& record) const;
+ 
 	vec3 center;
 	float radius;
 	material* mat;
 };
 
 
-inline bool Sphere::hit(const Ray& r, float t_min, float t_max, hit_record& record) const
+__device__ inline bool Sphere::hit(const Ray& r, float t_min, float t_max, hit_record& record) const
 {
 	vec3 oc = r.origin() - center;
 	float a = dot(r.direction(), r.direction());

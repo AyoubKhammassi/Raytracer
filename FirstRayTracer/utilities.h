@@ -10,15 +10,19 @@
 #include "float.h"
 #include "camera.h"
 #include "material.h"
+#include <curand.h>
 
 
 
 
 //fake drand48
-inline double drand48() { return double(rand()) / double(RAND_MAX); }
+//works only on CPU
+__host__ inline double drand48() { return double(rand()) / double(RAND_MAX); }
 
-//generates random point in unit disk
-inline vec3 random_in_unit_disk()
+
+
+//generates random point in unit disk, uses drand48 so works only on CPU
+__host__ inline vec3 random_in_unit_disk()
 {
 	vec3 p;
 	do
@@ -30,8 +34,8 @@ inline vec3 random_in_unit_disk()
 }
 
 
-//generates random point in unit sphere
-inline vec3 random_in_unit_sphere()
+//generates random point in unit sphere, , uses drand48 so works only on CPU
+__host__ inline vec3 random_in_unit_sphere()
 {
 	vec3 p;
 	do
@@ -46,13 +50,13 @@ inline vec3 random_in_unit_sphere()
 //reflected ray is equal to A + 2 * B
 //length of B equals dot(A, Normal)
 //direction of B is same as the normal
-inline vec3 reflect(const vec3& v, const vec3& n) { return v - 2 * dot(v, n)*n; }
+__device__ inline vec3 reflect(const vec3& v, const vec3& n) { return v - 2 * dot(v, n)*n; }
 
 
 //returns true if the ray is refracted, otherwise returns false which means ray is reflected
 //uses snell's law of n*sinA = n'*sinB
 //NB. sinA*sinA = 1 - cosA*cosA
-inline bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refracted)
+__device__ inline bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refracted)
 {
 	vec3 uv = unit_vector(v);
 	float dt = dot(uv, n);
@@ -69,7 +73,7 @@ inline bool refract(const vec3& v, const vec3& n, float ni_over_nt, vec3& refrac
 }
 
 //polinomial approximation of schlick
-inline float schlick(float cosine, float ref_idx)
+__device__ inline float schlick(float cosine, float ref_idx)
 {
 	float r0 = (1 - ref_idx) / (1 + ref_idx);
 	r0 = r0*r0;
@@ -77,7 +81,7 @@ inline float schlick(float cosine, float ref_idx)
 }
 
 //return the color of an intersection point that a ray makes with a hitable object
-inline vec3 color(const Ray& r, Hitable  *world, int depth)
+__device__ inline vec3 color(const Ray& r, Hitable  *world, int depth)
 {
 	hit_record record;
 	if (world->hit(r, 0.001, FLT_MAX, record))

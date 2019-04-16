@@ -6,9 +6,9 @@ class dielectric :
 	public material
 {
 public:
-	dielectric(float ri) : refraction_index(ri) {};
+	__device__ dielectric(float ri) : refraction_index(ri) {};
 
-	virtual bool scatter(const Ray& r_in, const hit_record& record, vec3& attenuation, Ray& scattered) const
+	__device__ virtual bool scatter(const Ray& r_in, const hit_record& record, vec3& attenuation, Ray& scattered) const
 	{
 		vec3 outward_normal;
 		vec3 reflected = reflect(r_in.direction(), record.normal);

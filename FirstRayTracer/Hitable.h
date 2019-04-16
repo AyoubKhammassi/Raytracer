@@ -14,7 +14,7 @@ struct hit_record
 class Hitable
 {
 public:
-	inline virtual bool hit(const Ray& r, float t_min, float t_max, hit_record& record) const = 0;
+	__device__ inline virtual bool hit(const Ray& r, float t_min, float t_max, hit_record& record) const = 0;
 };
 
 #endif // !HITABLEH

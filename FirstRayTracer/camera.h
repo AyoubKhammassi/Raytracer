@@ -9,7 +9,7 @@ vec3 random_in_unit_disk();
 class camera
 {
 public:
-	camera(vec3& lookfrom, vec3& lookat, vec3& vup, float vfov, float aspect, float aperture, float focus_dist)
+	__device__ camera(vec3& lookfrom, vec3& lookat, vec3& vup, float vfov, float aspect, float aperture, float focus_dist)
 	{
 		//vup : vector up
 		//vfov : vertical field of view in degrees
@@ -31,7 +31,7 @@ public:
 
 
 
-	Ray get_ray(float s, float t) 
+	__device__ Ray get_ray(float s, float t)
 	{ 
 		//vec3 rd = lens_radius * (random_in_unit_disk());
 		//vec3 offset = u*rd.x() + v*rd.y();
