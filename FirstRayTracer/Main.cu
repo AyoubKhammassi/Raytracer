@@ -20,7 +20,8 @@
 //get a random scene made of sphere
 __device__ Hitable *generate_random_scene(int n)
 {
-	Hitable** list = new Hitable*[n + 1];
+	Hitable** d_list;
+	checkCudaError(cudaMalloc((void**)&d_list, 2 * sizeof(Hitable*)));
 	list[0] = new Sphere(vec3(0, -1000, 0), 1000, new diffuse(vec3(0.5, 0.5, 0.5)));
 
 	int i = 1;
@@ -40,7 +41,7 @@ __device__ Hitable *generate_random_scene(int n)
 				{
 					list[i++] = new Sphere(center, 0.2, new metal(vec3(0.5*(drand48() + 1), 0.5*(drand48() + 1), 0.5*(drand48() + 1)), 0.5*drand48()));
 				}
-				else//cjoose glass
+				else//choose glass
 				{
 					list[i++] = new Sphere(center, 0.2, new dielectric(1.5));
 				}
@@ -53,6 +54,16 @@ __device__ Hitable *generate_random_scene(int n)
 	list[i++] = new Sphere(vec3(4, 1, 0), 1, new metal(vec3(0.7, 0.6, 0.5), 0.0));
 	
 	return new Hitable_list(list, i);
+}
+
+__global__ void render(vec3* fb, int max_x, int max_y)
+{
+	int i = threadIdx.x + threadIdx.x * blockDim.x;
+	int j = threadIdx.y + threadIdx.y * blockDim.y;
+
+	if ((i >= max_x) || (j >= max_y))
+		return;
+	//do stuff here
 }
 
 
@@ -74,7 +85,42 @@ __host__ int main()
 	int nx = 600;
 	int ny = 300;
 	int ns = 100;
+
+	//frame buffer size
+	size_t fb_size = nx * ny * sizeof(vec3);
+
+	//allocating frame buffer 
+	vec3* fb;
+	checkCudaError(cudaMallocManaged((void**)&fb, fb_size));
+
+	int tx = 8;
+	int ty = 8;
+	dim3 blocks(nx / tx + 1, ny / ty + 1);
+	dim3 threads(tx, ty);
+
+	//call the kernel
+	render<<<blocks, threads>>>(fb, nx, ny);
+	//bloc until job is done on the GPU
+	cudaDeviceSynchronize();
+
+
+	//print out the rendered frame to the ppm file
 	std::cout << "P3\n" << nx << " " << ny << "\n255\n";
+
+	for (int j = ny - 1; j >= 0; j--)
+	{
+		for (int i = 0; i < nx; i++)
+		{
+			int index = i + nx * j;
+			int ir = int(255.99*fb[j].e[0]);
+			int ig = int(255.99*fb[j].e[1]);
+			int ib = int(255.99*fb[j].e[2]);
+			std::cout << ir << " " << ig << " " << ib << "\n";
+		}
+	}
+
+	//freeing the frame buffer memory
+	checkCudaError(cudaFree(fb));
 
 	//vars
 	vec3 lower_left_corner = vec3(-2.0, -1.0, -1.0);

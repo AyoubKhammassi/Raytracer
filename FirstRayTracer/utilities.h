@@ -12,12 +12,25 @@
 #include "material.h"
 #include <curand.h>
 
+//macro for the error check function
+#define checkCudaError(val) check_cuda((val), #val, __FILE__, __LINE__)
+
+//function for error checking for cuda api calls
+void check_cuda(cudaError_t result, char const *const func, const char *const file, int const line) {
+	if (result) {
+		std::cerr << "CUDA error = " << static_cast<unsigned int>(result) << " at " <<
+			file << ":" << line << " '" << func << "' \n";
+		// Make sure we call CUDA Device Reset before exiting
+		cudaDeviceReset();
+		exit(99);
+	}
+}
 
 
 
 //fake drand48
 //works only on CPU
-__host__ inline double drand48() { return double(rand()) / double(RAND_MAX); }
+__device__ inline double drand48() { return double(rand()) / double(RAND_MAX); }
 
 
 
