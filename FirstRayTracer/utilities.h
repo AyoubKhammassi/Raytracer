@@ -145,11 +145,36 @@ __device__ inline vec3 color(const Ray& r, Hitable  *world, int depth)
 	else
 	{
 		
-		//draw gradient as background
-		vec3 unit_direction = unit_vector(r.direction());
-		float t = 0.5 * (unit_direction.y() + 1.0);
-		return (1 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
+
 	}
+}
+
+//device version of color
+__device__ vec3 d_color(const Ray& ray, Hitable** world, int depth, curandState local_rand_state)
+{
+	Ray cur_ray = ray;
+	float cur_attenuation = 1.0f;
+	for (int i = 0; i < depth; i++)
+	{
+		hit_record rec;
+		if ((*world)->hit(cur_ray, 0.001f, FLT_MAX, rec))
+		{
+			vec3 target = rec.p + rec.normal + d_random_in_unit_sphere(local_rand_state);
+			cur_attenuation *= 0.5f;
+			cur_ray = Ray(rec.p, target - rec.p);
+		}
+		else
+		{
+			//draw gradient as background
+			vec3 unit_direction = unit_vector(ray.direction());
+			float t = 0.5 * (unit_direction.y() + 1.0);
+			vec3 c = (1 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
+			return cur_attenuation * c;
+		}
+	}
+
+	//exceeded recursion
+	return vec3(0.0, 0.0, 0.0);
 }
 
 
