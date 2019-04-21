@@ -3,6 +3,12 @@
 #include "metal.h"
 #include "dielectric.h"
 
+#ifndef __CUDACC__
+#include "device_launch_parameters.h"
+#endif
+
+
+
 //whether the ray intesects with sphere or not
 /*float hit_sphere(const vec3& center, float radius, const Ray& r)
 {
@@ -18,11 +24,65 @@
 }*/
 
 //get a random scene made of sphere
+
+//this kernel creates the scene composed of hitables
+__global__ void create_world(Hitable** d_list,curandState* world_rand_states, int limit, int offset)
+{
+	int a = blockIdx.x - limit;
+	int b = threadIdx.x - limit;
+
+	if (a >= limit && b >= limit)
+		return;
+
+	int index = blockDim.x * blockIdx.x + threadIdx.x + offset;
+	float choose_mat = curand_uniform(&world_rand_states[index]);
+
+	float x_offset = curand_uniform(&world_rand_states[index]);
+	float z_offset = curand_uniform(&world_rand_states[index]);
+
+	vec3 center = vec3(a + 0.9*x_offset, 0.2, b + 0.9 * z_offset);
+
+	if ((center - vec3(4.0, 0.2, 0.0)).length() > 0.9)
+	{
+		if (choose_mat < 0.8) //choose diffuse
+		{
+			d_list[index] = new Sphere(center, 0.2, new diffuse(vec3(curand_uniform(&world_rand_states[index])*curand_uniform(&world_rand_states[index]), curand_uniform(&world_rand_states[index])*curand_uniform(&world_rand_states[index]), curand_uniform(&world_rand_states[index])*curand_uniform(&world_rand_states[index])),world_rand_states[index]));
+		}
+		else if (choose_mat < 0.95)//choose metal
+		{
+			d_list[index] = new Sphere(center, 0.2, new metal(vec3(0.5*(curand_uniform(&world_rand_states[index]) + 1), 0.5*(curand_uniform(&world_rand_states[index]) + 1), 0.5*(curand_uniform(&world_rand_states[index]) + 1)), 0.5*curand_uniform(&world_rand_states[index]),world_rand_states[26]));
+		}
+		else//choose glass
+		{
+			d_list[index] = new Sphere(center, 0.2, new dielectric(1.5, world_rand_states[73]));
+		}
+	}
+
+
+}
+//initialize random states for hitables in world creation
+__global__ void world_init(curandState* world_rand_states, int n_objects)
+{
+	int index = threadIdx.x + blockDim.x * blockIdx.x;
+	if (index >= n_objects)
+		return;
+	//Each thread gets same seed, a different sequence number, no offset
+	curand_init(1984, index, 0, &world_rand_states[index]);
+
+}
+
+//initialize rendering and random states for pixels
+__global__ void render_init()
+{
+
+}
+
+/*
 __device__ Hitable *generate_random_scene(int n)
 {
 	Hitable** d_list;
 	checkCudaError(cudaMalloc((void**)&d_list, 2 * sizeof(Hitable*)));
-	list[0] = new Sphere(vec3(0, -1000, 0), 1000, new diffuse(vec3(0.5, 0.5, 0.5)));
+	d_list[0] = new Sphere(vec3(0, -1000, 0), 1000, new diffuse(vec3(0.5, 0.5, 0.5)));
 
 	int i = 1;
 	for (int a = -11; a < 11; a++)
@@ -56,6 +116,8 @@ __device__ Hitable *generate_random_scene(int n)
 	return new Hitable_list(list, i);
 }
 
+*/
+
 __global__ void render(vec3* fb, int max_x, int max_y)
 {
 	int i = threadIdx.x + threadIdx.x * blockDim.x;
@@ -70,9 +132,30 @@ __global__ void render(vec3* fb, int max_x, int max_y)
 
 
 
-__host__ int main()
+int main()
 {
-	rand();
+	//initalizing thr world rand states
+	curandState* world_rand_states;
+	int limit = 11;
+	//number of object hitables that will need random in their creation
+	int n_objects = limit * limit;
+	dim3 blocks(n_objects / 8);
+	dim3 threads(8);
+	world_init<<<blocks,threads>>>(world_rand_states, n_objects);
+	checkCudaError(cudaDeviceSynchronize());
+
+	//creating the hitables in random positions and with random materials
+	Hitable** d_list;
+	//allocating memeory
+	checkCudaError(cudaMalloc((void**)&d_list, (n_objects + 4) * sizeof(Hitable*)));
+	//assigning the first sphere
+	d_list[0] = new Sphere(vec3(0, -1000, 0), 1000, new diffuse(vec3(0.5, 0.5, 0.5),world_rand_states[12]));
+	blocks.x = n_objects/limit;
+	threads.x = limit;
+	create_world<<<blocks, threads>>>(d_list, world_rand_states, limit, 1);
+	checkCudaError(cudaDeviceSynchronize());
+	std::cout << "world created";
+	/*rand();
 	srand(time(NULL));
 
 	/*std::cout << drand48() << "\n";
@@ -81,7 +164,7 @@ __host__ int main()
 	std::cout << (double(rand()) / double(RAND_MAX)) << "\n";
 	std::cout << double(rand()) << "\n";
 	std::cout << (random_in_unit_sphere().x()) << "\n";*/
-
+	/*
 	int nx = 600;
 	int ny = 300;
 	int ns = 100;
@@ -168,6 +251,6 @@ __host__ int main()
 		}
 	}
 	//file header
-	
+	*/
 }
 

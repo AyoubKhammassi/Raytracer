@@ -5,8 +5,8 @@
 class Sphere : public Hitable
 {
 public:
-	__device__ Sphere() = default;
-	__device__ Sphere(vec3& cen, float r, material* m) : center(cen), radius(r), mat(m) {};
+	__host__ __device__ Sphere() = default;
+	__host__ __device__ Sphere(vec3& cen, float r, material* m) : center(cen), radius(r), mat(m) {};
 	__device__ virtual bool hit(const Ray& r, float t_min, float t_max, hit_record& record) const;
  
 	vec3 center;

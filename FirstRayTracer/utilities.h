@@ -11,6 +11,7 @@
 #include "camera.h"
 #include "material.h"
 #include <curand.h>
+#include <curand_kernel.h>
 
 //macro for the error check function
 #define checkCudaError(val) check_cuda((val), #val, __FILE__, __LINE__)
@@ -30,7 +31,7 @@ void check_cuda(cudaError_t result, char const *const func, const char *const fi
 
 //fake drand48
 //works only on CPU
-__device__ inline double drand48() { return double(rand()) / double(RAND_MAX); }
+__host__ inline double drand48() { return double(rand()) / double(RAND_MAX); }
 
 
 
@@ -40,11 +41,14 @@ __host__ inline vec3 random_in_unit_disk()
 	vec3 p;
 	do
 	{
+
 		p = 2.0 * (vec3(drand48(), drand48(), 0)) + vec3(-1, -1, 0);
 		//std::cout << p.squared_length() << "\n";
 	} while (dot(p,p) >= 1);
 	return p;
 }
+
+
 
 
 //generates random point in unit sphere, , uses drand48 so works only on CPU
@@ -57,6 +61,34 @@ __host__ inline vec3 random_in_unit_sphere()
 		//std::cout << p.squared_length() << "\n";
 	} while (p.squared_length() >= 1.0);
 	return p;
+}
+
+//device version of random_in_unit_sphere
+__device__ inline vec3 d_random_in_unit_sphere(curandState state)
+{
+	curand_uniform(&state);
+	vec3 p;
+	do
+	{
+		p = 2.0 * (vec3(curand_uniform(&state), curand_uniform(&state), curand_uniform(&state))) + vec3(-1, -1, -1);
+	} while (p.squared_length() >= 1.0);
+	return p;
+}
+//device version of random in unit disk
+__device__ inline vec3 d_random_in_unit_disk(curandState state)
+{
+	vec3 p;
+	do
+	{
+		p = 2.0 * (vec3(curand_uniform(&state), curand_uniform(&state), curand_uniform(&state))) + vec3(-1, -1, -1);
+	} while (dot(p, p) >= 1);
+	return p;
+}
+
+//get random float from a random state
+__device__ float rand(curandState state)
+{
+	return curand_uniform(&state);
 }
 
 
@@ -119,8 +151,6 @@ __device__ inline vec3 color(const Ray& r, Hitable  *world, int depth)
 		return (1 - t) * vec3(1.0, 1.0, 1.0) + t * vec3(0.5, 0.7, 1.0);
 	}
 }
-
-
 
 
 #endif //UTILITIES

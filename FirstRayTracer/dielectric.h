@@ -2,11 +2,13 @@
 
 
 
+
+
 class dielectric :
 	public material
 {
 public:
-	__device__ dielectric(float ri) : refraction_index(ri) {};
+	__host__ __device__ dielectric(float ri, curandState s) : refraction_index(ri), state(s) {};
 
 	__device__ virtual bool scatter(const Ray& r_in, const hit_record& record, vec3& attenuation, Ray& scattered) const
 	{
@@ -40,8 +42,7 @@ public:
 			scattered = Ray(record.p, reflected);
 			reflect_prob = 1.0;
 		}
-
-		if (drand48() < reflect_prob)
+		if (rand(state) < reflect_prob)
 		{
 			scattered = Ray(record.p, reflected);
 		}
@@ -54,5 +55,6 @@ public:
 
 
 	float refraction_index;
+	curandState state;
 };
 
