@@ -48,6 +48,9 @@
     <ClInclude Include="dielectric.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Managed.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CudaCompile Include="Main.cu">

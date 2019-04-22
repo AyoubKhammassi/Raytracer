@@ -160,6 +160,7 @@
     <ClInclude Include="diffuse.h" />
     <ClInclude Include="Hitable.h" />
     <ClInclude Include="Hitable_list.h" />
+    <ClInclude Include="Managed.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="metal.h" />
     <ClInclude Include="Ray.h" />

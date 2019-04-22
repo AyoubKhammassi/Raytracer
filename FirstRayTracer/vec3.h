@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <iostream>
 #include <curand.h>
+#include "Managed.h"
 
 
-class vec3
+class vec3 
 {
 public:
-	__host__ __device__ vec3(){}
+	__host__ __device__ vec3() {  }
 	__host__ __device__ vec3(float e0, float e1, float e2) { e[0] = e0; e[1] = e1; e[2] = e2; }
 
 	__host__ __device__ inline float x() const { return e[0]; }
@@ -45,7 +46,7 @@ public:
 
 
 
-	float e[3];
+	float* e;
 };
 
 inline std::istream& operator>>(std::istream &is, vec3 &t)

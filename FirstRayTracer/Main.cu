@@ -7,7 +7,17 @@
 #include "device_launch_parameters.h"
 #endif
 
-
+#define cudaCheckErrors(msg) \
+    do { \
+        cudaError_t __err = cudaGetLastError(); \
+        if (__err != cudaSuccess) { \
+            fprintf(stderr, "Fatal error: %s (%s at %s:%d)\n", \
+                msg, cudaGetErrorString(__err), \
+                __FILE__, __LINE__); \
+            fprintf(stderr, "*** FAILED - ABORTING\n"); \
+            exit(1); \
+        } \
+    }
 
 //whether the ray intesects with sphere or not
 /*float hit_sphere(const vec3& center, float radius, const Ray& r)
@@ -26,7 +36,7 @@
 //get a random scene made of sphere
 
 //this kernel creates the scene composed of hitables
-__global__ void create_world(Hitable** d_list,curandState* world_rand_states, int limit, int offset)
+__global__ void create_world(Hitable** d_list,curandState* world_rand_states, int limit)
 {
 	int a = blockIdx.x - limit;
 	int b = threadIdx.x - limit;
@@ -34,7 +44,10 @@ __global__ void create_world(Hitable** d_list,curandState* world_rand_states, in
 	if (a >= limit && b >= limit)
 		return;
 
-	int index = blockDim.x * blockIdx.x + threadIdx.x + offset;
+	int index = blockDim.x * blockIdx.x + threadIdx.x;
+	if (index == 0)
+		d_list[0] = new Sphere(vec3(0, -1000, 0), 1000, new diffuse(vec3(0.5, 0.5, 0.5), world_rand_states[index]));
+
 	float choose_mat = curand_uniform(&world_rand_states[index]);
 
 	float x_offset = curand_uniform(&world_rand_states[index]);
@@ -180,10 +193,9 @@ int main()
 	cudaMalloc((void**)&d_list, (n_objects + 4) * sizeof(Hitable*));
 	//checkCudaError(cudaMalloc((void**)&d_list, (n_objects + 4) * sizeof(Hitable*)));
 	//assigning the first sphere
-	d_list[0] = new Sphere(vec3(0, -1000, 0), 1000, new diffuse(vec3(0.5, 0.5, 0.5),world_rand_states[12]));
 	blocks.x = n_objects/limit;
 	threads.x = limit;
-	create_world<<<blocks, threads>>>(d_list, world_rand_states, limit, 1);
+	create_world<<<blocks, threads>>>(d_list, world_rand_states, limit);
 	cudaDeviceSynchronize();
 	//checkCudaError(cudaDeviceSynchronize());
 	std::cout << "world created";
@@ -206,10 +218,18 @@ int main()
 
 	//frame buffer size
 	size_t fb_size = nx * ny * sizeof(vec3);
-
+	int nvectors = nx * ny;
+	const int nfloats = 3 * nx * ny;
 	//allocating frame buffer
 	vec3* fb;
 	cudaMallocManaged((void**)&fb, fb_size);
+	float* e;
+	for (int i = 0; i < nvectors; i++)
+	{
+		cudaMallocManaged((void**)&e, 3 * sizeof(float));
+		cudaMemcpy(&(fb[i].e), &(e), 3 * sizeof(float),cudaMemcpyHostToDevice);
+
+	}
 	//checkCudaError(cudaMallocManaged((void**)&fb, fb_size));
 
 	//initalizing thr pixel rand states
@@ -238,9 +258,9 @@ int main()
 		for (int i = 0; i < nx; i++)
 		{
 			int index = i + nx * j;
-			int ir = int(255.99*fb[j].e[0]);
-			int ig = int(255.99*fb[j].e[1]);
-			int ib = int(255.99*fb[j].e[2]);
+			int ir = int(255.99*fb[j].x());
+			int ig = int(255.99*fb[j].y());
+			int ib = int(255.99*fb[j].z());
 			std::cout << ir << " " << ig << " " << ib << "\n";
 		}
 	}

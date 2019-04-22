@@ -6,14 +6,15 @@ c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firs
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\Sphere.h(8): warning : __device__ annotation is ignored on a function("Sphere") that is explicitly defaulted on its first declaration
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\Hitable_list.h(8): warning : __device__ annotation is ignored on a function("Hitable_list") that is explicitly defaulted on its first declaration
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\utilities.h(150): warning : missing return statement at end of non-void function "color"
-C:/Users/Ayoub/Documents/Projects/Visual Studio Projects/c++/firstraytracer/FirstRayTracer/Main.cu(240): warning : variable "index" was declared but never referenced
+C:/Users/Ayoub/Documents/Projects/Visual Studio Projects/c++/firstraytracer/FirstRayTracer/Main.cu(260): warning : variable "index" was declared but never referenced
+C:/Users/Ayoub/Documents/Projects/Visual Studio Projects/c++/firstraytracer/FirstRayTracer/Main.cu(222): warning : variable "nfloats" was declared but never referenced
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\Ray.h(8): warning : __device__ annotation is ignored on a function("Ray") that is explicitly defaulted on its first declaration
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\Sphere.h(8): warning : __host__ annotation is ignored on a function("Sphere") that is explicitly defaulted on its first declaration
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\Sphere.h(8): warning : __device__ annotation is ignored on a function("Sphere") that is explicitly defaulted on its first declaration
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\Hitable_list.h(8): warning : __device__ annotation is ignored on a function("Hitable_list") that is explicitly defaulted on its first declaration
   Main.cu
-c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\vec3.h(65): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\vec3.h(165): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\vec3.h(66): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\vec3.h(166): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\camera.h(23): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\utilities.h(45): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\ayoub\documents\projects\visual studio projects\c++\firstraytracer\firstraytracer\utilities.h(60): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
