@@ -4,7 +4,6 @@
 #include <curand.h>
 #include "Managed.h"
 
-
 class vec3 
 {
 public:
@@ -44,7 +43,22 @@ public:
 	__host__ __device__ inline void make_unit_vector();
 
 
+	__host__ __device__ char* Write()
+	{
+		int ir = int(255.99*e[0]);
+		int ig = int(255.99*e[1]);
+		int ib = int(255.99*e[2]);
+		char* buffer;
+		buffer = "";
+		buffer += ir;
+		buffer += ' ';
+		buffer += ig;
+		buffer += ' ';
+		buffer += ib;
+		buffer += '\n';
 
+		return buffer;
+	}
 
 	float* e;
 };

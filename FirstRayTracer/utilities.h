@@ -13,6 +13,7 @@
 #include <curand.h>
 #include <curand_kernel.h>
 
+/*
 //macro for the error check function
 #define checkCudaError(val) check_cuda((val), #val, __FILE__, __LINE__)
 
@@ -25,7 +26,7 @@ void check_cuda(cudaError_t result, char const *const func, const char *const fi
 		cudaDeviceReset();
 		exit(99);
 	}
-}
+}*/
 
 
 
@@ -150,14 +151,14 @@ __device__ inline vec3 color(const Ray& r, Hitable  *world, int depth)
 }
 
 //device version of color
-__device__ vec3 d_color(const Ray& ray, Hitable** world, int depth, curandState local_rand_state)
+__device__ vec3 d_color(const Ray& ray, Hitable* world, int depth, curandState local_rand_state)
 {
 	Ray cur_ray = ray;
 	float cur_attenuation = 1.0f;
 	for (int i = 0; i < depth; i++)
 	{
 		hit_record rec;
-		if ((*world)->hit(cur_ray, 0.001f, FLT_MAX, rec))
+		if (world->hit(cur_ray, 0.001f, FLT_MAX, rec))
 		{
 			vec3 target = rec.p + rec.normal + d_random_in_unit_sphere(local_rand_state);
 			cur_attenuation *= 0.5f;
